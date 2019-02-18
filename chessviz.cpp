@@ -27,7 +27,6 @@ int main(){
 					   {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
 					   {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
 					   {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}};
-
 	out_board_consol(board);
 	return 0;
 }
