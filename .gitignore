@@ -1,6 +1,7 @@
 # IGNORE LIST OF PROJECT FILES
-/chessviz
-
+/bin/
+/build/
+/.vscode/
 # COPIED
 # Prerequisites
 *.d
