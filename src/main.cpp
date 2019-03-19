@@ -6,7 +6,5 @@ extern char board[8][8];
 
 int main(int argc, char* argv[])
 {
-    system("clear");
-    print_consol(board);
-    return 0;
+    system("clear");print_consol(board); return 0;
 }
