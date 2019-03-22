@@ -29,10 +29,10 @@ build/board_print_plain.o: src/board_print_plain.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 
 create:
-	mkdir -p build/ bin/
+	mkdir -p build/ bin/  bin/temp build/src
 
 clean:
-	rm -rf build/ bin/ build/src
+	rm -rf build/ bin/ 
 
 run: all
 	./bin/chessviz
