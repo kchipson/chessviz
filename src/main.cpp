@@ -10,6 +10,18 @@ extern char board[8][8];
 int main(int argc, char* argv[])
 {
     system("clear");
+    if (argc == 1) { //Чтение из ввода
+        read();
+    } else if (argc == 2) { //Чтение из файла
+        read_file((char*)argv[1]);
+
+    } else {
+        cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход только "
+                "один "
+                "параметр- файл с игровой партией!\x1b[0m"
+             << endl;
+        return (1);
+    }
 
     // ТЕСТ Вывода
     print_html_create();
