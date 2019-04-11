@@ -13,7 +13,7 @@ void read()
 
     do {
         getline(cin, buffer); // считывание строки
-    } while (check_str(buffer));
+    } while (checkStr(buffer));
 
     file_out << buffer << endl;
     cout << endl << "Введите y для завершения ввода: ";
@@ -25,7 +25,7 @@ void read()
         cin.get();
         do {
             getline(cin, buffer); // считывание строки
-        } while (check_str(buffer));
+        } while (checkStr(buffer));
 
         file_out << buffer << endl;
         cout << endl << "Введите y для завершения ввода: ";
@@ -52,7 +52,7 @@ void read_file(string dir)
     while (!file_in.eof()) {
         getline(file_in, buffer); // считывание строки из файла
         if (buffer != "") {
-            if (check_str(buffer)) {
+            if (checkStr(buffer)) {
                 cout << "\x1b[1;33mИсправьте входные данные в файле " << dir
                      << " и повторите попытку\x1b[0m" << endl
                      << "\x1b[1;31mЗавершение программы...\x1b[0m" << endl;
