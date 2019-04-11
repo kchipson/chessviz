@@ -1,4 +1,4 @@
-<p class="logo" align="center"><img src="https://psv4.userapi.com/c848120/u142963522/docs/d16/b756a4230ea2/lololo.png?extra=Cfbqn7CGw2VjJ0DW9Q6tLKAkNw6BGQf6M2s7eaz9iCYMcLru5JQ4JUc3MVXftctoMrJ284XPfinyuwCfN82-E-JyWIgt5Q5KwT30_n0hBrvDrob1eEulJdVSEl8k0gLdaam2HYwjzFCXyocr4Dk2YtP4nA" height="50%" width="50%"></p>
+<p class="logo" align="center"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1G9-Tj4Gx5s2t5vKCj2ziToQEECL8vvCo" height="50%" width="50%"></p>
 
 <p class="repo stats" align="center">
 <a href="https://travis-ci.com/KCHIPSON/chessviz"><img src="https://api.travis-ci.com/KCHIPSON/chessviz.svg?branch=master" alt="Build Status"></a>&nbsp;&nbsp;&nbsp;
@@ -11,18 +11,23 @@
 </p>
 
 <p class="myinfo" align="center">
-<a href="https://vk.com/kchipson"><img src="https://psv4.userapi.com/c848032/u142963522/docs/d16/4c08c0463173/vk.png?extra=T-_3EqWZi7Vm9thz3J8ocPQpgepKREIE7PvcgWW9xsihYX1xUXDJsVyMq1eedfMo4xBQcu2emKSSXWrKdMXIaMVwyON2Qs22839m1wJmzyP6_BVT0qmhWhcwV-EEyzSn6cXVul-ZnifsKYJY4cEgn72R5A" width="3%" height="3%" alt="VK"></a>&nbsp;&nbsp;&nbsp;
-<a href="https://github.com/KCHIPSON"><img src="https://psv4.userapi.com/c848036/u142963522/docs/d5/51bcc0e823f2/github.png?extra=FueSNy1r2SCSx5uSVryA8zSB8Qfnya0UupI6lHA1LkGGarAwEA8bqm3OsXAYJZSYRJ23RlRarlzAF2Qsh4bFiuntqWThr6N7vCCv4xopQf_WQ_ICAGCJAAuHiOKmuPB7Frounlt2qmDlCj6YVk6SvSHkYw" width="3%" height="3%" alt="GITHUB"></a>&nbsp;&nbsp;&nbsp;
-<a href="mailto:kchipson@ya.ru?subject=Github"><img src="https://psv4.userapi.com/c848136/u142963522/docs/d2/3dff8e65232c/email.png?extra=PcQUh65Z_-h2EELyCla9E-iv7hhUuOLez7winxJHXHVvyDdjhAP9_qCMxA81YhgF2YheFerdyqI29MRSyMOR1PfQ5ANqxh6pUXqa6_9S2p0knoZQ-FQWRTDrBNIJoIZFT-o-fGw-8rFdlpNP8LP2xcL88Q" width="3%" height="3%" alt="Email"></a>
+<a href="https://vk.com/kchipson"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=15FbKitp4YW02rgQk3yCQgscRU21zjOwY" width="3%" height="3%" alt="VK"></a>&nbsp;&nbsp;&nbsp;
+<a href="https://github.com/KCHIPSON"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=118VLVofpq8j58uYixG3qMH_q_J0tyrPE" width="3%" height="3%" alt="GITHUB"></a>&nbsp;&nbsp;&nbsp;
+<a href="mailto:kchipson@ya.ru?subject=Github"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1_PCut6eNLH58EONnnY7RPd33MM6cm3af" width="3%" height="3%" alt="Email"></a>
 </p>
 
 # **About chessviz**
 #### Application for translation to a readable form of chess notations
 
-# **Installation**
+# **Download and Build**
 ```
 $ git clone "https://github.com/KCHIPSON/chessviz.git" && cd chessviz && make
 ``` 
 
-<p align="center"><img src="https://psv4.userapi.com/c848228/u142963522/docs/d8/29630b665eba/black-line-png-12.png?extra=Wuy3gPJ0ntkDew8QBzmWWYgMoe02TyKc8rawQpAmkp3EWVq6ilVR0jer6VyItRwQFAQhGEK56iX5wRlXQmIJPIbvpZjYoLELT6RR2AL0m6rT7v4mEIoBM7foy_nZUuc-ThdIgS18rdPN6ZIXU5S_giOW"><br>Software development technologies, Laboratory work "Chessvis" , 2019</p> 
+# **Run**
+```
+$ make run
+``` 
+
+<p align="center"><img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=18WcwRWcK4Bjeu0fPDnpS2mhmf2WwlXi2"><br>Software development technologies, Laboratory work "Chessvis" , 2019</p> 
 

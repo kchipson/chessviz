@@ -1,5 +1,5 @@
 COMPILER = g++
-FLAGS = -MMD -c -Wall -Werror -o
+FLAGS = -MMD -c -Wall -Werror -std=c++14 -o
 
 .PHONY: clean run all
 
@@ -27,7 +27,7 @@ build/board_print_html.o: src/board_print_html.cpp
 
 build/board_print_plain.o: src/board_print_plain.cpp
 	$(COMPILER) $(FLAGS) $@  $<
-
+	
 create:
 	mkdir -p build/ bin/  bin/temp build/src
 

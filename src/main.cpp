@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     if (argc == 1) { //Чтение из ввода
         read();
     } else if (argc == 2) { //Чтение из файла
-        read_file((char*)argv[1]);
+        read_file(argv[1]);
 
     } else {
         cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход только "
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
         return (1);
     }
 
-    // ТЕСТ Вывода
+    /* // ТЕСТ Вывода
     print_html_create();
     print_html(board, (char*)"TEST");
     print_consol(board, (char*)"TEST");
@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
     if (getchar() == 'y') {
         print_html();
         system("sensible-browser bin/temp/chessviz.html");
-    }
+    }*/
+
     return 0;
 }
