@@ -9,52 +9,55 @@
 using namespace std;
 
 extern char boardc[8][8];
+void checkFlag(string str){
+    if ((str == string("--browser")) || (str == string("-b")))
+        print_html_create();
 
+    if (!((str == string("--console")) || (str == string("-c")) || (str == string("--browser")) || (str == string("-b")))){
+        cout<<" Неверный флаг, допустимые флаги: "<<endl
+            << "\x1b[1;35m• <--console/-c> - для вывода нотации в консоль" << endl
+            << "• <--browser/-b> - для вывода нотации в html-файл\x1b[0m" << endl;
+        exit(0);
+    }
+}
 int main(int argc, char* argv[])
-{
-    if (!((argc > 1)
-          && ((string(argv[1]) == string("--console"))
-              || (string(argv[1]) == string("-c"))
-              || (string(argv[1]) == string("--browser"))
-              || (string(argv[1]) == string("-b"))))) {
-        cout << "\x1b[1;35m Для запуска программы необходимо обязательно "
-                "указать один из флагов:"
-             << endl
+{ 
+    string buffer;
+    string moveWhite, moveBlack;
+   
+    switch (argc)
+    {
+    case 1:
+        cout << "\x1b[1;35m Для запуска программы необходимо обязательно указать один из флагов:"<< endl
              << "• <--console/-c> - для вывода нотации в консоль" << endl
              << "• <--browser/-b> - для вывода нотации в html-файл" << endl
              << "*Опционально: <Путь к файлу для считывания нотации>"
              << "\x1b[0m" << endl;
         return 1;
-    } else if (argc == 2) { //Чтение из ввода
+    case 2:
+        checkFlag(string(argv[1]));
         read();
-    } else if (argc == 3) { //Чтение из файла
+        break;
+    case 3:
+        checkFlag(string(argv[1]));
         read_file(argv[2]);
-    } else {
-        cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход "
-                "только "
-                "один "
-                "параметр- файл с игровой партией!\x1b[0m"
-             << endl;
-        return (1);
+        break;
+    default:
+        cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход только один параметр(<флаг, указывающий параметр вывода>) или два параметра(<флаг, указывающий параметр вывода> <файл с игровой партией>)!\x1b[0m"<< endl;
+        return 1;
+        break;
     }
+    
     if (checksMoves())
         return 1;
 
     ifstream file_in("./bin/temp/notation.txt"); // открытие файла для чтения
-    if (!file_in.is_open()) {
-        cout << "\x1b[1;31mERROR 404!\x1b[0m" << endl << endl;
-        exit(0);
-    }
-    string buffer;
-
-    if ((string(argv[1]) == string("--browser"))
-        || (string(argv[1]) == string("-b")))
-        print_html_create();
     while (!file_in.eof()) {
         int i = 0;
+        moveWhite= moveBlack="";
         getline(file_in, buffer); // считывание строки из файла
         if (buffer != "") {
-            string moveWhite, moveBlack;
+            
             while (buffer[i] != ' ')
                 i++;
             i++;
@@ -101,9 +104,10 @@ int main(int argc, char* argv[])
             break;
     }
     if ((string(argv[1]) == string("--browser"))
-        || (string(argv[1]) == string("-b")))
+        || (string(argv[1]) == string("-b"))) {
         print_html();
-    system("sensible-browser bin/temp/chessviz.html");
+        system("sensible-browser bin/temp/chessviz.html");
+    }
 
     return 0;
 }

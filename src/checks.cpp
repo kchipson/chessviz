@@ -7,7 +7,12 @@
 using namespace std;
 extern char board[8][8];
 int i = 1;
-
+int yMove(char x){
+    return (x - '0' - 1);
+}
+int xMove(char y){
+    return (y - 'a');
+}
 int checkStr(string str)
 {
     // Проверка на входные значения
@@ -85,42 +90,38 @@ int checkStr(string str)
 
 int checksMoves()
 {
-    ifstream file_in("./bin/temp/notation.txt"); // открытие файла для чтения
-    if (!file_in.is_open()) {
-        cout << "\x1b[1;31mERROR 404!\x1b[0m" << endl << endl;
-        exit(0);
-    }
-    string buffer;
 
+    ifstream file_in("./bin/temp/notation.txt"); // открытие файла для чтения
+    string buffer, move;
     while (!file_in.eof()) {
+        
         getline(file_in, buffer); // считывание строки из файла
         if (buffer != "") {
             i = 0;
-            string moveWhite, moveBlack;
+
             while (buffer[i] != ' ')
                 i++;
             i++;
-            while (buffer[i] != ' ') {
-                moveWhite += buffer[i];
-                i++;
-            }
-            i++;
-            while (i != (int)buffer.length()) {
-                moveBlack += buffer[i];
-                i++;
-            }
 
-            cout << "Ход \"" << buffer << "\"";
-            if (checkMove(moveWhite, 0))
-                return 1;
-            cout << "\x1b[1;32m верен!\x1b[0m" << endl;
-            cout << "Ход \"" << buffer << "\"";
-            if (checkMove(moveBlack, 1))
-                return 1;
-            cout << "\x1b[1;32m верен!\x1b[0m" << endl << endl;
-        }
-        if (buffer[buffer.length() - 1] == '#')
-            return 0;
+            for(int m=0;m<2;m++){
+                move="";
+                while ((buffer[i] != ' ') && (i != (int)buffer.length())) {
+                    move += buffer[i];
+                    i++;
+                    if (i == (int)buffer.length()) m++;
+                
+                }
+                i++;
+
+                cout << "Ход \"" << buffer << "\"";
+                if (checkMove(move, m)) // checkMove(move, m) m=0-белые m=1-черные
+                    return 1;
+                cout << "\x1b[1;32m верен!\x1b[0m" << endl;
+                if (buffer[buffer.length() - 1] == '#')
+                    return 0;
+                
+            }
+        }    
     }
     file_in.close(); // закрытие файла
     return 0;
@@ -129,124 +130,96 @@ int checksMoves()
 int checkMove(string move, bool color) //Ход и цвет(0-белые,1-черные)
 {
     if (color)
-        cout << "\x1b[1;35m <ход черных> \x1b[1;31m";
+        cout << "\x1b[1;35m <ход черных> \x1b[1;31m"<<endl;
     else
-        cout << "\x1b[1;35m <ход белых> \x1b[1;31m";
+        cout << "\x1b[1;35m <ход белых> \x1b[1;31m"<<endl;
     if (regex_match(move, regex("^[a-h].+")))
+        return checkPawn(move, color);
+    if (regex_match(move, regex("^N.+")))
         return checkPawn(move, color);
     return 0;
 }
 
 int checkPawn(string move, bool color)
 {
+    // TODO: реализовать взятие на проходе, шах, мат, превращение
+    int y=yMove(move[1]),x=xMove(move[0]),y_end=yMove(move[4]),x_end=xMove(move[3]),temp;
+    //cout<<"x= "<<x<<"    y= "<<y<<"    x_end= "<<x_end<<"    y_end= "<<y_end<<endl;
+    //getchar();
     if (color) {
-        if (board[(move[1] - '0' - 1)][(move[0] - 'a')]
-            != 'p') { //Проверка на наличие пешки в начальной позиции
+        temp=1;
+        if (board[y][x]== 'P') 
+        { //Проверка на ход
+            cout << "Ошибка, ход черных!"<< endl;
+            return 1;
+        }
+        if (board[y][x]!= 'p') 
+        { //Проверка на наличие пешки в начальной позиции
             cout << "Место " << move.substr(0, 2)
                  << " не содержит пешку! Ход пешкой из данной позиции "
                     "выполнить невозможно!"
                  << endl;
             return 1;
         }
-        if (move[2] == '-') {
-            if (!((move[0] == move[3])
-                  && ((move[1] == move[4] + 1)
-                      | (move[1]
-                         == move[4] + 2)))) { //Проверка на правильность хода
-                cout << "Пешка может ходить только вперед и только на "
-                        "1/(2-если ход из начальной позиции) клетку/и!"
-                     << endl;
-                return 1;
-            }
-            if (board[(move[4] - '0' - 1)][(move[3] - 'a')]
-                != ' ') { //Проверка на наличие фигуры в конечной позиции
-                cout << "Ход невозможен, т.к в " << move.substr(3, 5)
-                     << " стоит фигура!" << endl;
-                return 1;
-            }
-            if (move[1] == move[4] + 2)
-                if (board[(move[4] - '0' - 1)][(move[3] - 'a')] != ' ') {
-                    cout << board[(move[4] - '0' - 1)][(move[3] - 'a')];
-                    cout << "Ход невозможен, т.к на пути хода пешки стоит "
-                            "фигура "
-                         << endl;
-                    return 1;
-                }
-        } else {
-            if (!(move[1] == move[4] + 1)
-                && ((move[0] == move[3] - 1)
-                    || (move[0]
-                        == move[3] + 1))) { //Проверка на правильность хода
-                cout << "При взятии пешка может ходить на одну клетку по "
-                        "диагонали!"
-                     << endl;
-                return 1;
-            }
-            if (board[(move[4] - '0' - 1)][(move[3] - 'a')]
-                == ' ') { //Проверка на наличие фигуры в конечной позиции
-                cout << (move[4] - '0') << " + " << (move[3] - 'a');
-                cout << "Взятие невозможно, т.к в " << move.substr(3, 5)
-                     << " нет фигуры!" << endl;
-                return 1;
-                // TODO: реализовать взятие на проходе, шах, мат
-            }
+    }
+    else{
+        temp=-1;
+        if (board[y][x]== 'p') 
+        { //Проверка на ход
+            cout << "Ошибка, ход белых!"<< endl;
+            return 1;
         }
-    } else {
-        if (board[(move[1] - '0' - 1)][(move[0] - 'a')]
-            != 'P') { //Проверка на наличие пешки в начальной позиции
+        if (board[y][x]!= 'P') 
+        { //Проверка на наличие пешки в начальной позиции
             cout << "Место " << move.substr(0, 2)
                  << " не содержит пешку! Ход пешкой из данной позиции "
                     "выполнить невозможно!"
                  << endl;
             return 1;
-        }
-        if (move[2] == '-') {
-            if (!((move[0] == move[3])
-                  && ((move[1] == move[4] - 1)
-                      | (move[1]
-                         == move[4] - 2)))) { //Проверка на правильность хода
-                cout << "Пешка может ходить только вперед и только на "
-                        "1/(2-если ход из начальной позиции) клетку/и!"
-                     << endl;
-                return 1;
-            }
-            if (board[(move[4] - '0' - 1)][(move[3] - 'a')]
-                != ' ') { //Проверка на наличие фигуры в конечной позиции
-                cout << "Ход невозможен, т.к в " << move.substr(3, 5)
-                     << " стоит фигура!" << endl;
-                return 1;
-            }
-            if (move[1] == move[4] - 2)
-                if (board[(move[4] - '0' - 1)][(move[3] - 'a')] != ' ') {
-                    cout << "Ход невозможен, т.к на пути хода пешки стоит "
-                            "фигура "
-                         << endl;
-                    return 1;
-                }
-        } else {
-            if (!(move[1] == move[4] - 1)
-                && ((move[0] == move[3] - 1)
-                    || (move[0]
-                        == move[3] + 1))) { //Проверка на правильность хода
-                cout << "При взятии пешка может ходить на одну клетку по "
-                        "диагонали!"
-                     << endl;
-                return 1;
-            }
-            if (board[(move[4] - '0' - 1)][(move[3] - 'a')]
-                == ' ') { //Проверка на наличие фигуры в конечной позиции
-                cout << "Взятие невозможно, т.к в " << move.substr(3, 5)
-                     << " нет фигуры!" << endl;
-                return 1;
-                // TODO: реализовать взятие на проходе, шах, мат
-            }
         }
     }
 
-    board[(move[1] - '0' - 1)][(move[0] - 'a')] = ' ';
+    if (move[2] == '-') {
+        if (!((x == x_end) && ((y == y_end + temp * 1)|(y == y_end + temp * 2))))
+        { //Проверка на правильность хода
+            cout << "Пешка может ходить только вперед и только на "
+                    "1/(2-если ход из начальной позиции) клетку/и!"
+                    << endl;
+            return 1;
+        }
+        if (board[y_end][x_end]!= ' ')
+            { //Проверка на наличие фигуры в конечной позиции
+            cout << "Ход невозможен, т.к в " << move.substr(3, 5)
+                    << " стоит фигура!" << endl;
+            return 1;
+        }
+        if (y == y_end + temp * 2)
+            if (board[y_end + temp * 1][x_end] != ' ') {
+                cout << "Ход невозможен, т.к на пути хода пешки стоит фигура "
+                        << endl;
+                return 1;
+            }
+            
+    } else {
+        if (!(y == y_end + temp * 1) && ((x == x_end - temp * 1) || (x == x_end + temp * 1))) 
+        { //Проверка на правильность хода
+            cout << "При взятии пешка может ходить на одну клетку по диагонали!"
+                    << endl;
+            return 1;
+        }
+        if (board[y_end][x_end] == ' ') 
+            { //Проверка на наличие фигуры в конечной позиции
+            cout << "Взятие невозможно, т.к в " << move.substr(3, 5)
+                    << " нет фигуры!" << endl;
+            return 1;
+            
+        }
+    }
+
+    board[y][x] = ' ';
     if (color)
-        board[(move[4] - '0' - 1)][(move[3] - 'a')] = 'p';
+        board[y_end][x_end] = 'p';
     else
-        board[(move[4] - '0' - 1)][(move[3] - 'a')] = 'P';
+        board[y_end][x_end] = 'P';
     return 0;
 }

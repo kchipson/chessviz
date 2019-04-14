@@ -5,4 +5,5 @@ int checkStr(std::string str);
 int checkMove(std::string move, bool color);
 int checkPawn(std::string move, bool color);
 int checksMoves();
+
 #endif
