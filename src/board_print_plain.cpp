@@ -1,7 +1,8 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-void print_consol(char board[8][8], char name[])
+void print_consol(char board[8][8], string name)
 { // Функция отрисовки доски
     cout << endl << "\x1b[1;33m" << name << "\x1b[0m" << endl;
     int i, j;

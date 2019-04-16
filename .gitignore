@@ -1,4 +1,5 @@
 # IGNORE LIST OF PROJECT FILES
+Test*.txt
 /bin/
 /build/
 /.vscode/

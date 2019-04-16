@@ -1,46 +1,61 @@
+#include "board.h"
 #include "board_print_html.h"
-#include "board_print_plain.h"
 #include "board_read.h"
+#include "checks.h"
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <stdio.h>
 using namespace std;
 
-extern char board[8][8];
+void checkFlag(string str)
+{
+    if ((str == string("--browser")) || (str == string("-b")))
+        print_html_create();
 
+    if (!((str == string("--console")) || (str == string("-c"))
+          || (str == string("--browser")) || (str == string("-b")))) {
+        cout << " Неверный флаг, допустимые флаги: " << endl
+             << "\x1b[1;35m• <--console/-c> - для вывода нотации в консоль"
+             << endl
+             << "• <--browser/-b> - для вывода нотации в html-файл\x1b[0m"
+             << endl;
+        exit(0);
+    }
+}
 int main(int argc, char* argv[])
 {
-    system("clear");
-    if (argc == 1) { //Чтение из ввода
+    switch (argc) {
+    case 1:
+        cout << "\x1b[1;35m Для запуска программы необходимо обязательно "
+                "указать один из флагов:"
+             << endl
+             << "• <--console/-c> - для вывода нотации в консоль" << endl
+             << "• <--browser/-b> - для вывода нотации в html-файл" << endl
+             << "*Опционально: <Путь к файлу для считывания нотации>"
+             << "\x1b[0m" << endl;
+        return 1;
+    case 2:
+        checkFlag(string(argv[1]));
         read();
-    } else if (argc == 2) { //Чтение из файла
-        read_file((char*)argv[1]);
-
-    } else {
+        break;
+    case 3:
+        checkFlag(string(argv[1]));
+        read_file(argv[2]);
+        break;
+    default:
         cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход только "
-                "один "
-                "параметр- файл с игровой партией!\x1b[0m"
+                "один параметр(<флаг, указывающий параметр вывода>) или два "
+                "параметра(<флаг, указывающий параметр вывода> <файл с игровой "
+                "партией>)!\x1b[0m"
              << endl;
-        return (1);
+        return 1;
+        break;
     }
 
-    // ТЕСТ Вывода
-    print_html_create();
-    print_html(board, (char*)"TEST");
-    print_consol(board, (char*)"TEST");
-    board[1][3] = ' ';
-    board[3][3] = 'P';
-    print_html(board, (char*)"TEST2");
-    print_consol(board, (char*)"TEST2");
+    if (checksMoves())
+        return 1;
 
-    cout << endl
-         << "Отобразить шахматную нотацию в браузере?" << endl
-         << "            \x1b[1;32m[y]-да\x1b[0m     \x1b[1;31m[n]-нет\x1b[0m"
-         << endl;
-
-    if (getchar() == 'y') {
-        print_html();
-        system("sensible-browser bin/temp/chessviz.html");
-    }
+    print(argv[1]);
     return 0;
 }

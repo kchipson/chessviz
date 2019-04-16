@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <string>
 using namespace std;
 
 void print_html_create()
@@ -59,7 +60,7 @@ void print_html()
 
     html.close(); // закрываем файл
 }
-void print_html(char board[8][8], char name[])
+void print_html(char board[8][8], string name)
 {
     ofstream table("./bin/temp/table.html", ios::app);
 
