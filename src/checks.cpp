@@ -142,7 +142,116 @@ int checkMove(string move, bool color) //Ход и цвет(0-белые,1-че�
         return checkBishop(move, color);
     if (regex_match(move, regex("^R.+")))
         return checkRook(move, color);
+    if (regex_match(move, regex("^Q.+")))
+        return checkQueen(move, color);
         
+    return 0;
+}
+
+int checkQueen(string move, bool color)
+{ 
+    int y=yMove(move[2]),x=xMove(move[1]),y_end=yMove(move[5]),x_end=xMove(move[4]);
+    //cout<<"x= "<<x<<"    y= "<<y<<"    x_end= "<<x_end<<"    y_end= "<<y_end<<endl;
+    if (color) {
+        if (board[y][x]== 'Q') 
+        { //Проверка на ход
+            cout << "Ошибка в ходе "<<move<<", ожидался ход черных!"<< endl;
+            return 1;
+        }
+        if (board[y][x]!= 'q') 
+        { //Проверка на наличие коня в начальной позиции
+            cout << "Место " << move.substr(1, 2)<<" в ходе "<<move
+                 << " не содержит ферзя! Ход ферзем из данной позиции "
+                    "выполнить невозможно!"
+                 << endl;
+            return 1;
+        }
+    }
+    else{
+        if (board[y][x]== 'q') 
+        { //Проверка на ход
+            cout << "Ошибка в ходе "<<move<<", ожидался ход черных!"<< endl;
+            return 1;
+        }
+        if (board[y][x]!= 'Q') 
+        { //Проверка на наличие пешки в начальной позиции
+            cout << "Место " << move.substr(1, 2)<<" в ходе "<<move
+                 << " не содержит ферзя! Ход ферзем из данной позиции "
+                    "выполнить невозможно!"
+                 << endl;
+            return 1;
+        }
+    }
+
+
+    if (!(((x==x_end)&&(y!=y_end))||((x!=x_end)&&(y==y_end))||(abs(x-x_end)==abs(y-y_end))))
+        { //Проверка на правильность хода
+            cout << "Ошибка в ходе "<<move<<"! Ферзь ходит только по вертикали, горизонтали или диагонали!" << endl;
+            return 1;
+        }
+
+    if (move[3] == '-') {
+        if (board[y_end][x_end]!= ' ')
+            { //Проверка на наличие фигуры в конечной позиции
+            cout << "Ход "<<move<<" невозможен, т.к в " << move.substr(4, 6)
+                    << " стоит фигура!" << endl;
+            return 1;
+        }
+            
+    } else {
+        if (board[y_end][x_end] == ' ') 
+            { //Проверка на наличие фигуры в конечной позиции
+            cout << "Взятие в ходе "<<move<<" невозможно, т.к в " << move.substr(4, 6)
+                    << " нет фигуры!" << endl;
+            return 1;
+        }
+    }
+
+    //Проверка на наличие фигур по пути
+    if (abs(x-x_end)==abs(y-y_end)){
+        int temp_x=0,temp_y=0,z_x=1,z_y=1;
+        if (x>x_end) z_x=-1;
+        if (y>y_end) z_y=-1;
+
+        for(temp_x=x+z_x,temp_y=y+z_y;temp_x!=x_end;temp_x=temp_x+z_x,temp_y=temp_y+z_y)
+            if(board[temp_y][temp_x]!=' '){
+                cout << "Ход "<<move<<" невозможен, т.к на пути хода ферьзя стоит фигура "
+                << endl;
+                return 1;
+            }
+    }
+    else {
+        int temp_x=x,temp_y=y,z_x=0,z_y=0;
+        if (x>x_end) z_x=-1;
+        else if (x<x_end) z_x=1;
+        if (y>y_end) z_y=-1;
+        else if (y<y_end) z_y=1;
+
+        if (x!=x_end){
+            for(temp_x=x+z_x;temp_x!=x_end;temp_x=temp_x+z_x){
+                if(board[temp_y][temp_x]!=' '){
+                    cout << "Ход "<<move<<" невозможен, т.к на пути хода ферьзя стоит фигура "
+                    << endl;
+                    return 1;
+                }
+            }
+        }
+        else if (y!=y_end){
+            for(temp_y=y+z_y;temp_y!=y_end;temp_y=temp_y+z_y){
+                if(board[temp_y][temp_x]!=' '){
+                    cout << "Ход "<<move<<" невозможен, т.к на пути хода ферьзя стоит фигура "
+                    << endl;
+                    return 1;
+                }
+            }
+        }
+    }
+
+    board[y][x] = ' ';
+    if (color)
+        board[y_end][x_end] = 'q';
+    else
+        board[y_end][x_end] = 'Q';
     return 0;
 }
 
