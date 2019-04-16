@@ -1,6 +1,6 @@
+#include "board.h"
 #include "board_print_html.h"
 #include "board_read.h"
-#include "board.h"
 #include "checks.h"
 #include <cstdlib>
 #include <fstream>
@@ -8,23 +8,28 @@
 #include <stdio.h>
 using namespace std;
 
-void checkFlag(string str){
+void checkFlag(string str)
+{
     if ((str == string("--browser")) || (str == string("-b")))
         print_html_create();
 
-    if (!((str == string("--console")) || (str == string("-c")) || (str == string("--browser")) || (str == string("-b")))){
-        cout<<" Неверный флаг, допустимые флаги: "<<endl
-            << "\x1b[1;35m• <--console/-c> - для вывода нотации в консоль" << endl
-            << "• <--browser/-b> - для вывода нотации в html-файл\x1b[0m" << endl;
+    if (!((str == string("--console")) || (str == string("-c"))
+          || (str == string("--browser")) || (str == string("-b")))) {
+        cout << " Неверный флаг, допустимые флаги: " << endl
+             << "\x1b[1;35m• <--console/-c> - для вывода нотации в консоль"
+             << endl
+             << "• <--browser/-b> - для вывода нотации в html-файл\x1b[0m"
+             << endl;
         exit(0);
     }
 }
 int main(int argc, char* argv[])
-{    
-    switch (argc)
-    {
+{
+    switch (argc) {
     case 1:
-        cout << "\x1b[1;35m Для запуска программы необходимо обязательно указать один из флагов:"<< endl
+        cout << "\x1b[1;35m Для запуска программы необходимо обязательно "
+                "указать один из флагов:"
+             << endl
              << "• <--console/-c> - для вывода нотации в консоль" << endl
              << "• <--browser/-b> - для вывода нотации в html-файл" << endl
              << "*Опционально: <Путь к файлу для считывания нотации>"
@@ -39,11 +44,15 @@ int main(int argc, char* argv[])
         read_file(argv[2]);
         break;
     default:
-        cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход только один параметр(<флаг, указывающий параметр вывода>) или два параметра(<флаг, указывающий параметр вывода> <файл с игровой партией>)!\x1b[0m"<< endl;
+        cout << "\x1b[1;31mОШИБКА! Приложение может принимать на вход только "
+                "один параметр(<флаг, указывающий параметр вывода>) или два "
+                "параметра(<флаг, указывающий параметр вывода> <файл с игровой "
+                "партией>)!\x1b[0m"
+             << endl;
         return 1;
         break;
     }
-    
+
     if (checksMoves())
         return 1;
 

@@ -4,10 +4,10 @@
 #include "board_print_plain.h"
 #include "board_read.h"
 #include "checks.h"
-#include <regex>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <regex>
 #include <stdio.h>
 using namespace std;
 void print(string out);
