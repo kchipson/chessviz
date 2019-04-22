@@ -3,36 +3,41 @@ FLAGS = -MMD -c -Wall -Werror -std=c++14 -o
 
 .PHONY: clean run all
 
-all: create bin/chessviz
+all: create bin/chessviz #bin/chessviz-test
 
--include build/*.d
+-include build/src/*.d
 
-bin/chessviz: build/main.o build/checks.o build/board_read.o build/board.o build/board_print_html.o build/board_print_plain.o
+bin/chessviz: build/src/main.o build/src/checks.o build/src/board_read.o build/src/board.o build/src/board_print_html.o build/src/board_print_plain.o
 	$(COMPILER) $^ -o $@
 
-build/main.o: src/main.cpp
+build/src/main.o: src/main.cpp
 	$(COMPILER) $(FLAGS) $@ $<
 
-build/board.o: src/board.cpp
+build/src/board.o: src/board.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 
-build/checks.o: src/checks.cpp
+build/src/checks.o: src/checks.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 
-build/board_read.o: src/board_read.cpp
+build/src/board_read.o: src/board_read.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 
-build/board_print_html.o: src/board_print_html.cpp
+build/src/board_print_html.o: src/board_print_html.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 
-build/board_print_plain.o: src/board_print_plain.cpp
+build/src/board_print_plain.o: src/board_print_plain.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 	
+
+#-include build/test/*.d
+
+#bin/chessviz-test:
+#	$(COMPILER) $(FLAGS) -o $@ $^
+#...
+#build/test/
+
 create:
-	mkdir -p build/ bin/  bin/temp build/src
+	mkdir -p bin/temp build/src build/test
 
 clean:
 	rm -rf build/ bin/ 
-
-run: all
-	./bin/chessviz

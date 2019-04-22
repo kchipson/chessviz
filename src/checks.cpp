@@ -91,7 +91,7 @@ int checkStr(string str)
     return 0;
 }
 
-int checksMoves()
+int checksMoves(char board[][8])
 {
     ifstream file_in("./bin/temp/notation.txt"); // открытие файла для чтения
     string buffer, move;
@@ -114,7 +114,9 @@ int checksMoves()
 
                 cout << "Ход \"" << buffer << "\"";
                 if (checkMove(
-                            move, m)) // checkMove(move, m) m=0-белые m=1-черные
+                            board,
+                            move,
+                            m)) // checkMove(move, m) m=0-белые m=1-черные
                     return 1;
                 if (i == (int)buffer.length())
                     m++;
@@ -128,27 +130,30 @@ int checksMoves()
     return 0;
 }
 
-int checkMove(string move, bool color) //Ход и цвет(0-белые,1-черные)
+int checkMove(
+        char board[][8],
+        string move,
+        bool color) //Ход и цвет(0-белые,1-черные)
 {
     if (color)
         cout << "\x1b[1;35m <ход черных> \x1b[1;31m" << endl;
     else
         cout << "\x1b[1;35m <ход белых> \x1b[1;31m" << endl;
     if (regex_match(move, regex("^[a-h].+")))
-        return checkPawn(move, color);
+        return checkPawn(board, move, color);
     if (regex_match(move, regex("^N.+")))
-        return checkKnight(move, color);
+        return checkKnight(board, move, color);
     if (regex_match(move, regex("^B.+")))
-        return checkBishop(move, color);
+        return checkBishop(board, move, color);
     if (regex_match(move, regex("^R.+")))
-        return checkRook(move, color);
+        return checkRook(board, move, color);
     if (regex_match(move, regex("^Q.+")))
-        return checkQueen(move, color);
+        return checkQueen(board, move, color);
     if (regex_match(move, regex("^K.+")))
-        return checkKing(move, color);
+        return checkKing(board, move, color);
     return 0;
 }
-int checkKing(string move, bool color)
+int checkKing(char board[][8], string move, bool color)
 {
     int y = yMove(move[2]), x = xMove(move[1]), y_end = yMove(move[5]),
         x_end = xMove(move[4]);
@@ -219,7 +224,7 @@ int checkKing(string move, bool color)
     return 0;
 }
 
-int checkQueen(string move, bool color)
+int checkQueen(char board[][8], string move, bool color)
 {
     int y = yMove(move[2]), x = xMove(move[1]), y_end = yMove(move[5]),
         x_end = xMove(move[4]);
@@ -336,7 +341,7 @@ int checkQueen(string move, bool color)
     return 0;
 }
 
-int checkRook(string move, bool color)
+int checkRook(char board[][8], string move, bool color)
 {
     // TODO: NULL
     int y = yMove(move[2]), x = xMove(move[1]), y_end = yMove(move[5]),
@@ -435,7 +440,7 @@ int checkRook(string move, bool color)
     return 0;
 }
 
-int checkBishop(string move, bool color)
+int checkBishop(char board[][8], string move, bool color)
 {
     // TODO: NULL
     int y = yMove(move[2]), x = xMove(move[1]), y_end = yMove(move[5]),
@@ -515,7 +520,7 @@ int checkBishop(string move, bool color)
     return 0;
 }
 
-int checkKnight(string move, bool color)
+int checkKnight(char board[][8], string move, bool color)
 {
     // TODO: NULL
     int y = yMove(move[2]), x = xMove(move[1]), y_end = yMove(move[5]),
@@ -581,7 +586,7 @@ int checkKnight(string move, bool color)
     return 0;
 }
 
-int checkPawn(string move, bool color)
+int checkPawn(char board[][8], string move, bool color)
 {
     // TODO: реализовать взятие на проходе, шах, мат, превращение
     int y = yMove(move[1]), x = xMove(move[0]), y_end = yMove(move[4]),

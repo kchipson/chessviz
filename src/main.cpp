@@ -8,6 +8,15 @@
 #include <stdio.h>
 using namespace std;
 
+char board[8][8] = {{'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
+                    {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+                    {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                    {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                    {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                    {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                    {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
+                    {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}};
+
 void checkFlag(string str)
 {
     if ((str == string("--browser")) || (str == string("-b")))
@@ -52,8 +61,8 @@ int main(int argc, char* argv[])
         return 1;
         break;
     }
-
-    if (checksMoves())
+    
+    if (checksMoves(board))
         return 1;
 
     print(argv[1]);
