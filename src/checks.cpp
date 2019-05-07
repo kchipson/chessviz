@@ -532,7 +532,7 @@ int checkKnight(char board[][8], string move, bool color)
             return 1;
         }
         if (board[y][x] != 'n') { //Проверка на наличие коня в начальной позиции
-            cout << "Место " << move.substr(1, 2) << " в ходе " << move
+            cout << "Место " << move.substr(0, 2) << " в ходе " << move
                  << " не содержит коня! Ход конем из данной позиции "
                     "выполнить невозможно!"
                  << endl;
@@ -546,7 +546,7 @@ int checkKnight(char board[][8], string move, bool color)
         }
         if (board[y][x]
             != 'N') { //Проверка на наличие пешки в начальной позиции
-            cout << "Место " << move.substr(1, 2) << " в ходе " << move
+            cout << "Место " << move.substr(0, 2) << " в ходе " << move
                  << " не содержит коня! Ход конем из данной позиции "
                     "выполнить невозможно!"
                  << endl;
@@ -602,7 +602,7 @@ int checkPawn(char board[][8], string move, bool color)
         }
         if (board[y][x]
             != 'p') { //Проверка на наличие пешки в начальной позиции
-            cout << "Место " << move.substr(1, 2) << " в ходе " << move
+            cout << "Место " << move.substr(0, 2) << " в ходе " << move
                  << " не содержит пешку! Ход пешкой из данной позиции "
                     "выполнить невозможно!"
                  << endl;
@@ -616,7 +616,7 @@ int checkPawn(char board[][8], string move, bool color)
         }
         if (board[y][x]
             != 'P') { //Проверка на наличие пешки в начальной позиции
-            cout << "Место " << move.substr(1, 2) << " в ходе " << move
+            cout << "Место " << move.substr(0, 2) << " в ходе " << move
                  << " не содержит пешку! Ход пешкой из данной позиции "
                     "выполнить невозможно!"
                  << endl;
@@ -649,9 +649,10 @@ int checkPawn(char board[][8], string move, bool color)
             }
 
     } else {
-        if (!(y == y_end + temp * 1)
-            && ((x == x_end - temp * 1)
-                || (x == x_end + temp * 1))) { //Проверка на правильность хода
+        if (!((y == y_end + temp * 1)
+              && ((x == x_end - temp * 1)
+                  || (x
+                      == x_end + temp * 1)))) { //Проверка на правильность хода
             cout << "Ход " << move
                  << "! При взятии пешка может ходить на одну клетку по "
                     "диагонали!"

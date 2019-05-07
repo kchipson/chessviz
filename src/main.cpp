@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
         return 1;
         break;
     }
-    
+
     if (checksMoves(board))
         return 1;
 

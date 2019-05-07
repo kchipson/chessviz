@@ -3,7 +3,7 @@ FLAGS = -MMD -c -Wall -Werror -std=c++14 -o
 
 .PHONY: clean run all
 
-all: create bin/chessviz #bin/chessviz-test
+all: create bin/chessviz bin/chessviz-test
 
 -include build/src/*.d
 
@@ -29,12 +29,19 @@ build/src/board_print_plain.o: src/board_print_plain.cpp
 	$(COMPILER) $(FLAGS) $@  $<
 	
 
-#-include build/test/*.d
+-include build/test/*.d
 
-#bin/chessviz-test:
-#	$(COMPILER) $(FLAGS) -o $@ $^
-#...
-#build/test/
+test: create bin/chessviz-test 
+
+bin/chessviz-test: build/test/main.o build/test/checks.o
+	$(COMPILER) -o $@ $^
+
+build/test/main.o: test/main.cpp
+	$(COMPILER) $(FLAGS) $@  $<
+
+
+build/test/checks.o: src/checks.cpp
+	$(COMPILER) $(FLAGS) $@  $<
 
 create:
 	mkdir -p bin/temp build/src build/test
