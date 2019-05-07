@@ -1,5 +1,6 @@
 #ifndef CHECKS_H
 #define CHECKS_H
+
 #include <string>
 int checkStr(std::string str);
 int checkMove(char board[][8], std::string move, bool color);
