@@ -6,7 +6,7 @@
 using namespace std;
 TEST_CASE("СheckStr input error", "[checkStr]")
 {
-    REQUIRE(checkStr((string) "error") == 1);
+    REQUIRE(checkStr((string) "error") == 0);
     REQUIRE(checkStr((string) "2. e2-e3 a7-a6") == 1);
     REQUIRE(checkStr((string) "2. e9-e3 a7-a6") == 1);
 }
